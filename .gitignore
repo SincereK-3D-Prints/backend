@@ -78,3 +78,6 @@ dist
 
 # config
 local*.js*
+
+# db file
+*.db

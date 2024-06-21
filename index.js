@@ -4,6 +4,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const { initialize, query } = require('./database');
+const redirectSSL = require('redirect-ssl');
 
 initialize();
 const app = express();
@@ -13,6 +14,11 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(compression());
+
+if (config.get('ssl')) {
+  console.log('SSL enabled');
+  app.use(redirectSSL);
+}
 
 app.use(express.static('../frontend/dist/angular/browser'));
 
@@ -35,10 +41,11 @@ if (ssl) {
   };
   https.createServer(options, app)
     .listen(443, () => {
-      console.log(`Listening on port 3333...`);
+      console.log(`Listening on port 443...`);
     });
 } else {
-  app.listen(3333, () => {
-    console.log(`Listening on port 3333...`);
+  const port = config.get('port') ?? 80;
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}...`);
   });
 }
