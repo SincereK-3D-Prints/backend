@@ -3,7 +3,9 @@ const config = require('config');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
+const { initialize, query } = require('./database');
 
+initialize();
 const app = express();
 const ssl = config.get('ssl');
 
@@ -14,9 +16,14 @@ app.use(compression());
 
 app.use(express.static('../frontend/dist/angular/browser'));
 
-app.post('/api/subscribe', (req, res) => {
-  console.log(req.body);
-  res.status(201).send({ subscribed: true });
+app.post('/api/subscribe', async (req, res) => {
+  try {
+    const { email } = req.body;
+    const result = await query(`INSERT INTO email_subscriptions (email) VALUES (?) RETURNING *`, [email]);
+    return res.status(201).json({ subscribed: true });
+  } catch (error) {
+    return res.status(500).json({ subscribed: false });
+  }
 });
 
 if (ssl) {
@@ -27,7 +34,7 @@ if (ssl) {
     cert: fs.readFileSync(ssl.cert),
   };
   https.createServer(options, app)
-    .listen(3333, () => {
+    .listen(443, () => {
       console.log(`Listening on port 3333...`);
     });
 } else {
