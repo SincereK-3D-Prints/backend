@@ -44,7 +44,7 @@ if (ssl) {
       console.log(`Listening on port 443...`);
     });
 } else {
-  const port = config.get('port') ?? 80;
+  const port = config.get('port');
   app.listen(port, () => {
     console.log(`Listening on port ${port}...`);
   });
