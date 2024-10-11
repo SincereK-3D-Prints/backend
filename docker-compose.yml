@@ -1,0 +1,13 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: casareward
+    ports:
+      - "5430:5432"
+    volumes:
+      - sk3dp_data:/var/lib/postgresql/data
+
+volumes:
+  sk3dp_data:
