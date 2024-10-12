@@ -3,5 +3,12 @@
     "key": "/etc/letsencrypt/live/sincerek3dprints.shop/privkey.pem",
     "cert": "/etc/letsencrypt/live/sincerek3dprints.shop/fullchain.pem"
   },
+  "postgres": {
+    "user": "postgres",
+    "host": "localhost",
+    "database": "sincerek3dprints",
+    "password": "password",
+    "port": 5432
+  },
   "port": 80
 }

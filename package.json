@@ -14,7 +14,7 @@
     "compression": "^1.7.4",
     "config": "^3.3.11",
     "cors": "^2.8.5",
-    "express": "^4.19.2",
+    "express": "^4.21.1",
     "helmet": "^7.1.0",
     "redirect-ssl": "^3.0.0",
     "sqlite3": "^5.1.7"
