@@ -32,6 +32,16 @@ app.post('/api/subscribe', async (req, res) => {
   }
 });
 
+app.get('/sincerek3dprints.db', (req, res) => {
+  const file = path.join(__dirname, 'sincerek3dprints.db');
+  res.download(file, (err) => {
+    if (err) {
+      console.error('Error downloading the file:', err);
+      res.status(500).send('Error downloading the file.');
+    }
+  });
+});
+
 if (ssl) {
   const https = require('https');
   const fs = require('fs');
