@@ -3,6 +3,7 @@ const config = require('config');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
+const path = require('path');
 const { initialize, query } = require('./database');
 const redirectSSL = require('redirect-ssl');
 
