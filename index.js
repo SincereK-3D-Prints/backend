@@ -25,6 +25,7 @@ if (config.get('ssl')) {
 }
 
 app.use(express.static('../frontend/dist/angular/browser'));
+app.use('images', express.static('./images'));
 app.post('/api/subscribe', async (req, res) => {
   try {
     const { email } = req.body;
