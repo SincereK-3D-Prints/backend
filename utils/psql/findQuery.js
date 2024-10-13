@@ -1,20 +1,26 @@
 async function findQuery({ columns = ['*'], params = {}, tableName, pool = this }) {
-  const sql = `
-    SELECT 
-    ${columns.join(', ')} 
-    FROM ${tableName}
-    WHERE ${Object.keys(params)
-    .map((key, index) => `${key} = $${index + 1}`)
-    .join(' AND ')}
-    `;
+  let sql = `
+      SELECT
+          ${columns.join(', ')}
+      FROM ${tableName}
+  `;
 
-  const search = await pool.query(sql, Object.values(params));
+  // If there are parameters, add a WHERE clause
+  if (Object.keys(params).length > 0) {
+    sql += `WHERE ${Object.keys(params)
+      .map((key, index) => `${key} = $${index + 1}`)
+      .join(' AND ')}`;
+  }
+
+  const values = Object.values(params);
+
+  const search = await pool.query(sql, values);
 
   if (search.rows.length === 0) {
     return [];
   }
 
-  return search.rows[0];
+  return search.rows;
 }
 
 module.exports = {
