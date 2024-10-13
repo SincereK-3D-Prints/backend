@@ -3,6 +3,8 @@ const { Pool } = require('pg');
 const { paginationQuery } = require('../utils/psql/paginationQuery');
 const { findOneQuery } = require('../utils/psql/findOneQuery');
 const { findQuery } = require('../utils/psql/findQuery');
+const { createQuery } = require("../utils/psql/createQuery");
+const { updateQuery } = require("../utils/psql/updateQuery");
 
 const pool = new Pool(config.get('postgres'));
 
@@ -20,6 +22,8 @@ pool.connect((error, client) => {
 pool.paginationQuery = paginationQuery;
 pool.findOneQuery = findOneQuery;
 pool.findQuery = findQuery;
+pool.createQuery = createQuery;
+pool.updateQuery = updateQuery;
 
 const psql = async (req, res, next) => {
   req.psql = {
