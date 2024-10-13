@@ -84,3 +84,6 @@ local*.js*
 
 # lock files
 *-lock.*
+
+# Images
+images/
