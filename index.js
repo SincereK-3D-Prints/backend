@@ -24,7 +24,7 @@ if (config.get('ssl')) {
   app.use(redirectSSL);
 }
 
-app.use('/images', express.static('./images'));
+app.use('/images', express.static('images'));
 app.use(express.static('../frontend/dist/angular/browser'));
 app.post('/api/subscribe', async (req, res) => {
   try {
