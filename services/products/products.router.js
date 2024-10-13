@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('./products.model');
+const { ValidateProduct } = require('./product.middleware'); // Import the validation middleware
 
 // List all products
 router.get('/', async (req, res) => {
@@ -28,16 +29,18 @@ router.get('/:id', async (req, res) => {
 });
 
 // Create a new product
-router.post('/', async (req, res) => {
+router.post('/', ValidateProduct, async (req, res) => {  // Use validation middleware
   try {
-    const { name, price, description, image, colors, stock, shipping_cost, production_cost, production_time } = req.body;
+    const { name, price, description, image, colors, sizes, stock, sold, shipping_cost, production_cost, production_time } = req.body;
     const newProduct = await Product.create({
       name,
       price,
       description,
       image,
       colors,
+      sizes,
       stock,
+      sold,
       shipping_cost,
       production_cost,
       production_time
@@ -49,17 +52,19 @@ router.post('/', async (req, res) => {
 });
 
 // Update an existing product
-router.put('/:id', async (req, res) => {
+router.put('/:id', ValidateProduct, async (req, res) => {  // Use validation middleware
   try {
     const { id } = req.params;
-    const { name, price, description, image, colors, stock, shipping_cost, production_cost, production_time } = req.body;
+    const { name, price, description, image, colors, sizes, stock, sold, shipping_cost, production_cost, production_time } = req.body;
     const updatedProduct = await Product.update(id, {
       name,
       price,
       description,
       image,
       colors,
+      sizes,
       stock,
+      sold,
       shipping_cost,
       production_cost,
       production_time
