@@ -10,7 +10,7 @@ const findOne = async (id) => {
 
 const create = async ({ name, price, description, image, colors, stock, shipping_cost, production_cost, production_time }) => {
   const sql = `
-    INSERT INTO products (name, price, description, image, colors, stock, shipping_cost, production_cost, production_time)
+    INSERT INTO products (name, price, description, images, colors, stock, shipping_cost, production_cost, production_time)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     RETURNING *;
   `;
@@ -21,7 +21,7 @@ const create = async ({ name, price, description, image, colors, stock, shipping
 const update = async (id, { name, price, description, image, colors, stock, shipping_cost, production_cost, production_time }) => {
   const sql = `
     UPDATE products
-    SET name = $2, price = $3, description = $4, image = $5, colors = $6, stock = $7, shipping_cost = $8, production_cost = $9, production_time = $10
+    SET name = $2, price = $3, description = $4, images = $5, colors = $6, stock = $7, shipping_cost = $8, production_cost = $9, production_time = $10
     WHERE id = $1
     RETURNING *;
   `;

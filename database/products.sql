@@ -3,7 +3,7 @@ CREATE TABLE products (
   name VARCHAR(255) NOT NULL,
   price NUMERIC(10, 2) NOT NULL,
   description TEXT,
-  image TEXT[],
+  images TEXT[],
   colors TEXT[],
   stock INT NOT NULL,
   shipping_cost NUMERIC(10, 2),
