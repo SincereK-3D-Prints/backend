@@ -3,7 +3,6 @@ const config = require('config');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
-const path = require('path');
 const { initialize, query } = require('./database');
 const redirectSSL = require('redirect-ssl');
 
@@ -14,17 +13,24 @@ initialize();
 const app = express();
 const ssl = config.get('ssl');
 
-app.use(express.json());
+app.options('*', cors());
 app.use(cors());
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false,
+  crossOriginResourcePolicy: false
+}));
 app.use(compression());
+app.use(express.json());
 
 if (config.get('ssl')) {
   console.log('SSL enabled');
   app.use(redirectSSL);
 }
 
-app.use('/images', express.static('images'));
+app.use('/images', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');  // Allow all origins for static images
+  next();
+}, express.static('images'));
 app.use(express.static('../frontend/dist/angular/browser'));
 app.post('/api/subscribe', async (req, res) => {
   try {
