@@ -5,6 +5,10 @@ const ValidateProduct = [
     .notEmpty().withMessage('Name is required')
     .isString().withMessage('Name must be a string'),
 
+  body('slug')
+    .notEmpty().withMessage('Slug is required')
+    .isString().withMessage('Slug must be a string with hypens and no special characters'),
+
   body('price')
     .notEmpty().withMessage('Price is required')
     .isJSON().withMessage('Price must be a valid JSON'),
@@ -39,10 +43,18 @@ const ValidateProduct = [
     .optional().isString().withMessage('Production time must be a valid interval'),
 
   (req, res, next) => {
+    if (req.body.name && !req.body.slug) {
+      req.body.slug = req.body.name
+        .toLowerCase()
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '');
+    }
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+
     next();
   }
 ];

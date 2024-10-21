@@ -7,9 +7,9 @@ const { ValidateProduct } = require('./product.middleware'); // Import the valid
 router.get('/', async (req, res) => {
   try {
     const products = await Product.find();
-    res.json(products);
+    res.json({ products });
   } catch (error) {
-    res.status(500).json({ message: 'Error retrieving products', details: error.message });
+    res.status(500).json({ message: 'Error retrieving products', error: error.message });
   }
 });
 
@@ -21,57 +21,46 @@ router.get('/:id', async (req, res) => {
     if (!product) {
       res.status(404).json({ message: 'Product not found' });
     } else {
-      res.json(product);
+      res.json({ product });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Error retrieving product', details: error.message });
+    res.status(500).json({ message: 'Error retrieving product', error: error.message });
+  }
+});
+
+// Get a specific product by slug
+router.get('/slug/:slug', async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const product = await Product.findSlug(slug);
+    if (!product) {
+      res.status(404).json({ message: 'Product not found' });
+    } else {
+      res.json({ product });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving product', error: error.message });
   }
 });
 
 // Create a new product
-router.post('/', ValidateProduct, async (req, res) => {  // Use validation middleware
+router.post('/', ValidateProduct, async (req, res) => {
   try {
-    const { name, price, description, image, colors, sizes, stock, sold, shipping_cost, production_cost, production_time } = req.body;
-    const newProduct = await Product.create({
-      name,
-      price,
-      description,
-      image,
-      colors,
-      sizes,
-      stock,
-      sold,
-      shipping_cost,
-      production_cost,
-      production_time
-    });
-    res.status(201).json(newProduct);
+    const product = await Product.create(req.body);
+    res.status(201).json({ product });
   } catch (error) {
-    res.status(500).json({ message: 'Error creating product', details: error.message });
+    res.status(500).json({ message: 'Error creating product', error: error.message });
   }
 });
 
 // Update an existing product
-router.put('/:id', ValidateProduct, async (req, res) => {  // Use validation middleware
+router.put('/:id', ValidateProduct, async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, price, description, image, colors, sizes, stock, sold, shipping_cost, production_cost, production_time } = req.body;
-    const updatedProduct = await Product.update(id, {
-      name,
-      price,
-      description,
-      image,
-      colors,
-      sizes,
-      stock,
-      sold,
-      shipping_cost,
-      production_cost,
-      production_time
-    });
-    res.json(updatedProduct);
+    const product = await Product.update(id, req.body);
+    res.json({ product });
   } catch (error) {
-    res.status(500).json({ message: 'Error updating product', details: error.message });
+    res.status(500).json({ message: 'Error updating product', error: error.message });
   }
 });
 
@@ -82,7 +71,7 @@ router.delete('/:id', async (req, res) => {
     await Product.destroy(id);
     res.status(204).send();
   } catch (error) {
-    res.status(500).json({ message: 'Error deleting product', details: error.message });
+    res.status(500).json({ message: 'Error deleting product', error: error.message });
   }
 });
 

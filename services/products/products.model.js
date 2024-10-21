@@ -8,6 +8,10 @@ const findOne = async (id) => {
   return pool.findOneQuery({ params: { id }, tableName: 'products' });
 };
 
+const findSlug = async (slug) => {
+  return pool.findOneQuery({ params: { slug }, tableName: 'products' });
+};
+
 const create = async (columns) => {
   return await pool.createQuery({ columns, tableName: 'products' });
 };
@@ -27,7 +31,8 @@ const destroy = async (id) => {
 module.exports = {
   find,
   findOne,
+  findSlug,
   create,
   update,
-  destroy
+  destroy,
 };

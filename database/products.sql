@@ -1,6 +1,7 @@
 CREATE TABLE products (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
+  slug VARCHAR(255) NOT NULL,
   price JSONB NOT NULL DEFAULT '[15.00, 25.00, 35.00]',
   description TEXT,
   images JSONB DEFAULT '[]',
