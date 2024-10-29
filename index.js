@@ -3,12 +3,12 @@ const config = require('config');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
-const { initialize, query } = require('./database');
+const path = require("path");
 const redirectSSL = require('redirect-ssl');
+const { initialize, query } = require('./database');
 
 // Routers
 const products = require('./services/products/products.router');
-const path = require("path");
 
 initialize();
 const app = express();
@@ -18,10 +18,10 @@ app.enable('strict routing', false);
 app.enable('trust proxy', true);
 app.options('*', cors());
 app.use(cors());
-// app.use(helmet({
-//   contentSecurityPolicy: false,
-//   crossOriginResourcePolicy: false
-// }));
+app.use(helmet({
+  contentSecurityPolicy: false,
+  crossOriginResourcePolicy: false
+}));
 app.use(compression());
 app.use(express.json());
 
@@ -49,7 +49,7 @@ app.post('/api/subscribe', async (req, res) => {
 app.use('/api/products', products);
 
 app.use(express.static('../frontend/dist/angular/browser'));
-app.use((req, res) => res.sendFile('../frontend/dist/angular/browser/index.html'));
+app.use((req, res) => res.sendFile(path.resolve('../frontend/dist/angular/browser/index.html')));
 
 if (ssl) {
   const https = require('https');
