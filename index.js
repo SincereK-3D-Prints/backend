@@ -13,7 +13,8 @@ initialize();
 const app = express();
 const ssl = config.get('ssl');
 
-app.enable('strict routing', true);
+app.enable('strict routing', false);
+app.enable('trust proxy', true);
 app.options('*', cors());
 app.use(cors());
 // app.use(helmet({
