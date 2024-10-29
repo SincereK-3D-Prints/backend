@@ -31,7 +31,7 @@ app.use('/images', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');  // Allow all origins for static images
   next();
 }, express.static('images'));
-app.use(express.static('../frontend/dist/angular/browser'));
+
 app.post('/api/subscribe', async (req, res) => {
   try {
     const { email } = req.body;
@@ -44,6 +44,8 @@ app.post('/api/subscribe', async (req, res) => {
 
 
 app.use('/api/products', products);
+
+app.use('*', express.static('../frontend/dist/angular/browser'));
 
 
 if (ssl) {
