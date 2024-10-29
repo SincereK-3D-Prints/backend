@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('./products.model');
-const { ValidateProduct } = require('./product.middleware'); // Import the validation middleware
+const { ValidateProduct } = require('./products.middleware'); // Import the validation middleware
 
 // List all products
 router.get('/', async (req, res) => {
