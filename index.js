@@ -46,7 +46,7 @@ app.post('/api/subscribe', async (req, res) => {
 
 app.use('/api/products', products);
 
-app.use(express.static('../frontend/dist/angular/browser'));
+// app.use(express.static('../frontend/dist/angular/browser'));
 app.use('*', express.static('../frontend/dist/angular/browser/index.html'));
 
 if (ssl) {
