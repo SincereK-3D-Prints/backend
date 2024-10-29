@@ -8,6 +8,7 @@ const redirectSSL = require('redirect-ssl');
 
 // Routers
 const products = require('./services/products/products.router');
+const path = require("path");
 
 initialize();
 const app = express();
@@ -48,7 +49,7 @@ app.post('/api/subscribe', async (req, res) => {
 app.use('/api/products', products);
 
 app.use(express.static('../frontend/dist/angular/browser'));
-app.use('*', express.static('../frontend/dist/angular/browser/index.html'));
+app.use((req, res) => res.sendFile('../frontend/dist/angular/browser/index.html'));
 
 if (ssl) {
   const https = require('https');
