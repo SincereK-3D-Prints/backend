@@ -13,6 +13,7 @@ initialize();
 const app = express();
 const ssl = config.get('ssl');
 
+app.enable('strict routing');
 app.options('*', cors());
 app.use(cors());
 app.use(helmet({
