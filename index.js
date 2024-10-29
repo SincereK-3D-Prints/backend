@@ -28,7 +28,6 @@ if (config.get('ssl')) {
   app.use(redirectSSL);
 }
 
-app.use(express.static('../frontend/dist/angular/browser'));
 app.use('/images', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');  // Allow all origins for static images
   next();
@@ -47,7 +46,8 @@ app.post('/api/subscribe', async (req, res) => {
 
 app.use('/api/products', products);
 
-
+app.use(express.static('../frontend/dist/angular/browser'));
+app.use('*', express.static('../frontend/dist/angular/browser/index.html'));
 
 if (ssl) {
   const https = require('https');
