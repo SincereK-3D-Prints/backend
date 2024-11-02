@@ -94,7 +94,7 @@ passport.use(new GoogleStrategy({
 // JWT Strategy for protecting routes
 passport.use(new JwtStrategy({
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.JWT_SECRET
+  secretOrKey: config.get('jwt_secret')
 }, async (payload, done) => {
   try {
     const user = await Auth.findById(payload.id);
