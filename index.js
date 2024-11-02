@@ -6,6 +6,7 @@ const compression = require('compression');
 const path = require("path");
 const redirectSSL = require('redirect-ssl');
 const { initialize, query } = require('./database');
+const { sendVerifyEmail } = require("./email/send");
 
 // Routers
 const auth = require('./services/auth/auth.router');
@@ -45,6 +46,14 @@ app.post('/api/subscribe', async (req, res) => {
   } catch (error) {
     return res.status(500).json({ subscribed: false });
   }
+});
+
+app.post('/api/email/test', async (req, res) => {
+  const { email, displayName, code } = req.body;
+  console.log('Received POST request with JSON data:');
+
+  await sendVerifyEmail(email, displayName, code);
+  res.json({ message: 'POST request successful!' });
 });
 
 app.use('/api/auth', auth);
