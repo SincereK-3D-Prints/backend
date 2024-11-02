@@ -1,0 +1,17 @@
+### Register a new user
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "jemiloii@gmail.com",
+  "password": "test123"
+}
+
+### Login
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "brian@visualnovelx.com",
+  "password": ""
+}

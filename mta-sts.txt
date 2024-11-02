@@ -1,0 +1,4 @@
+version: STSv1
+mode: enforce
+mx: _dc-mx.7448e41c9abd.sincerek3dprints.shop
+max_age: 604800
