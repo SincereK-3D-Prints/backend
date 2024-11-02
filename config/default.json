@@ -11,5 +11,19 @@
     "public": "",
     "secret": ""
   },
+  "oauth": {
+    "google": {
+      "client": {
+        "id": "",
+        "secret": ""
+      }
+    },
+    "facebook": {
+      "app": {
+        "id": "",
+        "secret": ""
+      }
+    }
+  },
   "port": 5557
 }

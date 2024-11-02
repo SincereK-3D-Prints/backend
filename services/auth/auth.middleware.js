@@ -1,3 +1,4 @@
+const config = require('config');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -33,8 +34,8 @@ const upsertUsers = async (profile, provider) => {
 
 // Facebook Strategy
 passport.use(new FacebookStrategy({
-  clientID: process.env.FACEBOOK_APP_ID,
-  clientSecret: process.env.FACEBOOK_APP_SECRET,
+  clientID: config.get('oauth.facebook.app.id'),
+  clientSecret: config.get('oauth.facebook.app.secret'),
   callbackURL: "/api/auth/facebook/callback",
   profileFields: ['id', 'emails', 'name']
 }, async (accessToken, refreshToken, profile, done) => {
@@ -63,8 +64,8 @@ passport.use(new FacebookStrategy({
 
 // Google Strategy
 passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  clientID: config.get('oauth.google.client.id'),
+  clientSecret: config.get('oauth.google.client.secret'),
   callbackURL: "/api/auth/google/callback"
 }, async (accessToken, refreshToken, profile, done) => {
   try {
