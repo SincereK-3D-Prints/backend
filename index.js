@@ -10,7 +10,7 @@ const { initialize, query } = require('./database');
 // Routers
 const auth = require('./services/auth/auth.router');
 const products = require('./services/products/products.router');
-const stripe = require('./services/stripe/stripe.router');
+// const stripe = require('./services/stripe/stripe.router');
 
 initialize();
 const app = express();
@@ -49,7 +49,7 @@ app.post('/api/subscribe', async (req, res) => {
 
 app.use('/api/auth', auth);
 app.use('/api/products', products);
-app.use('/api/stripe', stripe);
+// app.use('/api/stripe', stripe);
 
 app.get('/.well-known/mta-sts.txt', (req, res) => res.sendFile(path.resolve('./mta-sts.txt')));
 app.use(express.static('../frontend/dist/angular'));
