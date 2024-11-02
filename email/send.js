@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport(directTransport({
 
 const options = {
   from: 'info@sincerek3dprints.shop',
-  subject: 'Verify Shibiko AI Account',
+  subject: 'Verify SincereK 3D Prints Account',
   dkim: {
     domainName: "sincerek3dprints.shop",
     keySelector: "mail",
